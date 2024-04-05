@@ -8,7 +8,7 @@ resource "aws_vpc" "this" {
   enable_dns_support   = true
 
   tags = {
-    Name = "${var.project_name}-vpc"
+    Name = "${var.project_prefix}-vpc"
   }
 }
 
@@ -16,7 +16,7 @@ resource "aws_internet_gateway" "this" {
   vpc_id = aws_vpc.this.id
 
   tags = {
-    Name = "${var.project_name}-igw"
+    Name = "${var.project_prefix}-igw"
   }
 }
 
@@ -28,7 +28,7 @@ resource "aws_subnet" "public" {
   map_public_ip_on_launch = true
 
   tags = {
-    Name = "${var.project_name}-subnet-public-${count.index + 1}"
+    Name = "${var.project_prefix}-subnet-public-${count.index + 1}"
   }
 }
 
@@ -41,7 +41,7 @@ resource "aws_route_table" "public" {
   }
 
   tags = {
-    Name = "${var.project_name}-public-rt"
+    Name = "${var.project_prefix}-public-rt"
   }
 }
 
@@ -59,7 +59,7 @@ resource "aws_subnet" "private" {
   map_public_ip_on_launch = false
 
   tags = {
-    Name = "${var.project_name}-subnet-private-${count.index + 1}"
+    Name = "${var.project_prefix}-subnet-private-${count.index + 1}"
   }
 }
 
@@ -88,7 +88,7 @@ resource "aws_vpc_endpoint" "ssmmessages" {
 }
 
 resource "aws_security_group" "vpc_endpoint" {
-  name   = "${var.project_name}-vpc-endpoint-sg"
+  name   = "${var.project_prefix}-vpc-endpoint-sg"
   vpc_id = aws_vpc.this.id
 
   ingress {
